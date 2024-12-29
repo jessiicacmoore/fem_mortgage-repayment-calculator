@@ -2,13 +2,20 @@ import {
   MortgageForm,
   MortgageResults,
 } from "@features/mortgage-calculator/components";
+import { useMortgageCalculator } from "@features/mortgage-calculator/hooks";
 
 function HomePage() {
+  const { formData, setFormData, results, handleCalculate } =
+    useMortgageCalculator();
+
   return (
-    <div>
-      <h1>Homepage</h1>
-      <MortgageForm />
-      <MortgageResults />
+    <div className="bg-neutral-white">
+      <MortgageForm
+        formData={formData}
+        setFormData={setFormData}
+        onCalculate={handleCalculate}
+      />
+      <MortgageResults results={results} />
     </div>
   );
 }

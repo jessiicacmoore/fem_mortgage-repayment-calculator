@@ -1,10 +1,11 @@
+import MainLayout from "@layouts/MainLayout";
 import HomePage from "@pages/HomePage";
 
 function App() {
   return (
-    <main className="min-h-screen">
+    <MainLayout>
       <HomePage />
-    </main>
+    </MainLayout>
   );
 }
 
