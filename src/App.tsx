@@ -1,8 +1,10 @@
+import HomePage from "@pages/HomePage";
+
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold text-green-900">Hello world</h1>
-    </>
+    <main className="min-h-screen">
+      <HomePage />
+    </main>
   );
 }
 
