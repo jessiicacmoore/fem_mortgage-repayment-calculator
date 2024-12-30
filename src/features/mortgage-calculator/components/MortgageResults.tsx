@@ -6,9 +6,9 @@ type MortgageResultsProps = { results: MortgageResultsData | null };
 
 function MortgageResults({ results }: MortgageResultsProps) {
   return (
-    <Container className="bg-neutral-900 text-neutral-300">
+    <Container className="bg-neutral-900 text-neutral-300 md:rounded-bl-[5rem]">
       {!results ? (
-        <div className="text-center">
+        <div className="text-center md:flex md:h-full md:flex-col md:justify-center">
           <img src={emptyIllustration} alt="" className="mx-auto" />
           <h2>Results shown here</h2>
           <p>

@@ -26,13 +26,15 @@ function MortgageForm({
 
   return (
     <Container>
-      <h1>Mortgage Calculator</h1>
-      <Button buttonType="secondary" aria-describedby="clear-all-desc">
-        Clear All
-      </Button>
-      <p className="hidden" id="clear-all-desc">
-        Clears all fields in the form below.
-      </p>
+      <div className="md:mb-3 md:mt-2 md:flex md:items-center md:justify-between">
+        <h1>Mortgage Calculator</h1>
+        <Button buttonType="secondary" aria-describedby="clear-all-desc">
+          Clear All
+        </Button>
+        <p className="hidden" id="clear-all-desc">
+          Clears all fields in the form below.
+        </p>
+      </div>
       <form onSubmit={handleSubmit} className="mt-6">
         <NumberInput
           label="Mortgage Amount"
@@ -42,7 +44,7 @@ function MortgageForm({
           unitPosition="prefix"
           onChange={(value) => handleInputChange("mortgageAmount", value)}
         />
-        <div>
+        <div className="md:grid md:grid-cols-2 md:gap-6">
           <NumberInput
             label="Mortgage Term"
             value={formData.mortgageTerm}

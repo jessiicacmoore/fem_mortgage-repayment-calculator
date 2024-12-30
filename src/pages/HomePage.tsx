@@ -9,7 +9,7 @@ function HomePage() {
     useMortgageCalculator();
 
   return (
-    <div className="bg-neutral-white">
+    <div className="max-w-4xl bg-neutral-white md:grid md:grid-cols-2 md:overflow-hidden md:rounded-3xl md:shadow-md">
       <MortgageForm
         formData={formData}
         setFormData={setFormData}

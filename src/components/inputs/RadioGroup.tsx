@@ -23,7 +23,9 @@ function RadioGroup({
   };
   return (
     <fieldset role="radiogroup" aria-labelledby={`${name}-legend`}>
-      <legend id={`${name}-legend`}>{label}</legend>
+      <legend id={`${name}-legend`} className="mb-2">
+        {label}
+      </legend>
       <div>
         {options.map((option) => (
           <label
