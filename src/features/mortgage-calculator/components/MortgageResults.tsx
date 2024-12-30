@@ -18,16 +18,23 @@ function MortgageResults({ results }: MortgageResultsProps) {
         </div>
       ) : (
         <>
-          <h2>Your results</h2>
+          <h2 className="mt-0">Your results</h2>
           <p>
             our results are shown below based on the information you provided.
             To adjust the results, edit the form and click “calculate
             repayments” again.
           </p>
-          <h3>Your monthly repayments</h3>
-          <p>{results.monthlyRepayment}</p>
-          <h3>Total you'll repay over the term</h3>
-          <p>{results.totalRepayment}</p>
+          <div className="mt-6 rounded-lg border-t-4 border-t-primary-lime bg-neutral-950 px-4 py-6">
+            <h3>Your monthly repayments</h3>
+            <p className="text-4xl font-bold text-primary-lime">
+              {results.monthlyRepayment}
+            </p>
+            <span className="horizontal-line"></span>
+            <h3>Total you'll repay over the term</h3>
+            <p className="text-2xl font-bold text-neutral-white">
+              {results.totalRepayment}
+            </p>
+          </div>
         </>
       )}
     </Container>

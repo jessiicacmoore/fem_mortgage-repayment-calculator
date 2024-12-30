@@ -10,14 +10,8 @@
   }
 
   h1,
-  h2,
-  h3 {
+  h2 {
     @apply font-bold;
-  }
-
-  h2,
-  h3 {
-    @apply text-neutral-white;
   }
 
   h1 {
@@ -25,8 +19,13 @@
   }
 
   h2 {
-    @apply my-4 text-xl;
+    @apply my-4 text-xl text-neutral-white;
   }
+
+  h3 {
+    @apply my-2;
+  }
+
   a {
     @apply text-inherit underline transition-colors;
   }
@@ -35,5 +34,11 @@
 @layer components {
   .input-base {
     @apply block w-full rounded border border-neutral-500 px-4 py-2;
+  }
+}
+
+@layer utilities {
+  .horizontal-line {
+    @apply my-4 block border-t border-neutral-700;
   }
 }
