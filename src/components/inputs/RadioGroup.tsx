@@ -26,7 +26,10 @@ function RadioGroup({
       <legend id={`${name}-legend`}>{label}</legend>
       <div>
         {options.map((option) => (
-          <div key={option.value}>
+          <label
+            key={option.value}
+            className="input-base has-[:checked]:bg-transparent-primary mb-2 flex cursor-pointer items-center font-bold focus-within:ring-2 focus-within:ring-blue-500 has-[:checked]:border-primary-lime"
+          >
             <input
               type="radio"
               id={`${name}-${option.value}`}
@@ -35,9 +38,15 @@ function RadioGroup({
               checked={selectedValue === option.value}
               onChange={handleChange}
               aria-checked={selectedValue === option.value}
+              className="peer sr-only"
             />
-            <label htmlFor={`${name}-${option.value}`}>{option.label}</label>
-          </div>
+            <div className="mr-3 flex h-4 w-4 items-center justify-center rounded-full border-2 border-neutral-700 peer-checked:border-primary-lime">
+              {selectedValue === option.value && (
+                <div className="h-4/6 w-4/6 rounded-full bg-primary-lime"></div>
+              )}
+            </div>
+            <span>{option.label}</span>
+          </label>
         ))}
       </div>
     </fieldset>

@@ -1,4 +1,5 @@
 import React from "react";
+import calculatorIcon from "@assets/images/icon-calculator.svg";
 import { MortgageFormData } from "../types";
 import { Button, Container } from "@components/ui";
 import { NumberInput, RadioGroup } from "@components/inputs";
@@ -32,12 +33,13 @@ function MortgageForm({
       <p className="hidden" id="clear-all-desc">
         Clears all fields in the form below.
       </p>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mt-6">
         <NumberInput
           label="Mortgage Amount"
           value={formData.mortgageAmount}
           id="mortgage-amount"
-          prefix="$"
+          unit="$"
+          unitPosition="prefix"
           onChange={(value) => handleInputChange("mortgageAmount", value)}
         />
         <div>
@@ -45,14 +47,14 @@ function MortgageForm({
             label="Mortgage Term"
             value={formData.mortgageTerm}
             id="mortgage-term"
-            suffix="years"
+            unit="years"
             onChange={(value) => handleInputChange("mortgageTerm", value)}
           />
           <NumberInput
             label="Interest Rate"
             value={formData.interestRate}
             id="interest-rate"
-            suffix="%"
+            unit="%"
             allowDecimals
             onChange={(value) => handleInputChange("interestRate", value)}
           />
@@ -67,7 +69,13 @@ function MortgageForm({
           selectedValue={formData.mortgageType}
           onChange={(value) => handleInputChange("mortgageType", value)}
         />
-        <Button type="submit">Calculate Repayments</Button>
+        <Button
+          type="submit"
+          className="mt-6 flex w-full items-center justify-center"
+        >
+          <img src={calculatorIcon} alt="" className="mr-2" />
+          Calculate Repayments
+        </Button>
       </form>
     </Container>
   );

@@ -15,7 +15,8 @@ function Button({
 }: ButtonProps) {
   const btnClasses = cn(
     {
-      "bg-primary-lime py-2 px-4 rounded-full": buttonType === "primary",
+      "bg-primary-lime py-3 px-4 font-bold text-neutral-900 rounded-full":
+        buttonType === "primary",
       "underline text-neutral-300": buttonType === "secondary",
     },
     className,

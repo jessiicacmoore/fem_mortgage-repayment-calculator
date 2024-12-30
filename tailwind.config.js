@@ -8,6 +8,9 @@ export default {
           lime: "hsl(61, 70%, 52%)",
           red: "hsl(4, 69%, 50%)",
         },
+        transparent: {
+          primary: "hsla(61, 70%, 52%, 0.15)",
+        },
         neutral: {
           white: "hsl(0, 0%, 100%)",
           100: "hsl(202, 86%, 94%)",

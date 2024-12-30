@@ -6,16 +6,16 @@ type MortgageResultsProps = { results: MortgageResultsData | null };
 
 function MortgageResults({ results }: MortgageResultsProps) {
   return (
-    <Container className="bg-neutral-900">
+    <Container className="bg-neutral-900 text-neutral-300">
       {!results ? (
-        <>
-          <img src={emptyIllustration} alt="" />
+        <div className="text-center">
+          <img src={emptyIllustration} alt="" className="mx-auto" />
           <h2>Results shown here</h2>
           <p>
             Complete the form and click "calculate repayments" to see what your
             monthly repayments would be.
           </p>
-        </>
+        </div>
       ) : (
         <>
           <h2>Your results</h2>

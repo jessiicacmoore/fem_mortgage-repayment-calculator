@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { formatNumber } from "@utils/formatNumber";
+import { cn } from "@utils/cn";
 
 type NumberInputProps = {
   label: string;
@@ -9,8 +10,8 @@ type NumberInputProps = {
   error?: string;
   placeholder?: string;
   allowDecimals?: boolean;
-  prefix?: string;
-  suffix?: string;
+  unit?: string;
+  unitPosition?: "prefix" | "suffix";
 };
 
 function NumberInput({
@@ -21,8 +22,8 @@ function NumberInput({
   error,
   placeholder,
   allowDecimals = false,
-  prefix,
-  suffix,
+  unit,
+  unitPosition = "suffix",
 }: NumberInputProps) {
   const [formattedValue, setFormattedValue] = useState(value);
 
@@ -36,14 +37,25 @@ function NumberInput({
     onChange(sanitizedValue);
   };
 
+  const inputClasses = cn("input-base z-10", {
+    "border-l-0 rounded-l-none": unit && unitPosition === "prefix",
+    "border-r-0 rounded-r-none": unit && unitPosition === "suffix",
+  });
+
+  const unitClasses = cn(
+    "grid place-items-center border border-neutral-500 bg-neutral-100 px-3 text-sm font-bold text-gray-500",
+    {
+      "rounded-l border-r-0": unit && unitPosition === "prefix",
+      "rounded-r border-l-0": unit && unitPosition === "suffix",
+    },
+  );
+
   return (
     <div>
       <label htmlFor={id}>{label}</label>
-      <div>
-        {prefix && (
-          <span className="bg-gray-100 px-3 text-sm text-gray-700">
-            {prefix}
-          </span>
+      <div className="relative mb-6 mt-2 flex">
+        {unit && unitPosition === "prefix" && (
+          <span className={unitClasses}>{unit}</span>
         )}
         <input
           type="text"
@@ -53,17 +65,14 @@ function NumberInput({
           placeholder={placeholder}
           aria-describedby={`${id}-description ${id}-error`}
           aria-invalid={!!error}
-          className="block w-full rounded-md border border-gray-300 p-2"
+          className={inputClasses}
         />
-        {suffix && (
-          <span className="bg-gray-100 px-3 text-sm text-gray-700">
-            {suffix}
-          </span>
+        {unit && unitPosition === "suffix" && (
+          <span className={unitClasses}>{unit}</span>
         )}
       </div>
-      <span id={`${id}-description`} className="sr-only">
-        {prefix ? `This field expects an amount in ${prefix}` : ""}
-        {suffix ? ` This field is measured in ${suffix}` : ""}
+      <span id={`${id}-description`} className="hidden">
+        {unit ? `This field expects an amount in ${unit}` : ""}
       </span>
       {error && (
         <span id={`${id}-error`} className="text-sm text-red-500">

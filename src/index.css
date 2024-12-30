@@ -5,7 +5,35 @@
 @tailwind utilities;
 
 @layer base {
+  :is(input, button, textarea, select, a) {
+    @apply focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-bold;
+  }
+
+  h2,
+  h3 {
+    @apply text-neutral-white;
+  }
+
+  h1 {
+    @apply mb-1 text-xl text-neutral-900;
+  }
+
+  h2 {
+    @apply my-4 text-xl;
+  }
   a {
     @apply text-inherit underline transition-colors;
+  }
+}
+
+@layer components {
+  .input-base {
+    @apply block w-full rounded border border-neutral-500 px-4 py-2;
   }
 }
