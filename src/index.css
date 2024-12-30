@@ -33,7 +33,7 @@
 
 @layer components {
   .input-base {
-    @apply block w-full rounded border border-neutral-500 px-4 py-2;
+    @apply block w-full rounded border border-neutral-500 px-4 py-2 text-neutral-900 focus:border-primary-lime focus:ring-0;
   }
 }
 

@@ -37,13 +37,13 @@ function NumberInput({
     onChange(sanitizedValue);
   };
 
-  const inputClasses = cn("input-base z-10", {
+  const inputClasses = cn("input-base z-10 peer", {
     "border-l-0 rounded-l-none": unit && unitPosition === "prefix",
     "border-r-0 rounded-r-none": unit && unitPosition === "suffix",
   });
 
   const unitClasses = cn(
-    "grid place-items-center border border-neutral-500 bg-neutral-100 px-3 text-sm font-bold text-gray-500",
+    "grid place-items-center border border-neutral-500 bg-neutral-100 px-3 text-sm font-bold text-gray-500 peer-focus:border-primary-lime peer-focus:bg-primary-lime peer-focus:text-neutral-900",
     {
       "rounded-l border-r-0": unit && unitPosition === "prefix",
       "rounded-r border-l-0": unit && unitPosition === "suffix",
@@ -53,10 +53,9 @@ function NumberInput({
   return (
     <div>
       <label htmlFor={id}>{label}</label>
-      <div className="relative mb-6 mt-2 flex">
-        {unit && unitPosition === "prefix" && (
-          <span className={unitClasses}>{unit}</span>
-        )}
+      <div
+        className={`relative mb-6 mt-2 flex ${unitPosition === "prefix" ? "flex-row-reverse" : ""}`}
+      >
         <input
           type="text"
           id={id}
@@ -67,9 +66,7 @@ function NumberInput({
           aria-invalid={!!error}
           className={inputClasses}
         />
-        {unit && unitPosition === "suffix" && (
-          <span className={unitClasses}>{unit}</span>
-        )}
+        {unit && <span className={unitClasses}>{unit}</span>}
       </div>
       <span id={`${id}-description`} className="hidden">
         {unit ? `This field expects an amount in ${unit}` : ""}

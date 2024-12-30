@@ -14,6 +14,7 @@ function Button({
   ...props
 }: ButtonProps) {
   const btnClasses = cn(
+    "hover:scale-105 transition-transform",
     {
       "bg-primary-lime py-3 px-4 font-bold text-neutral-900 rounded-full":
         buttonType === "primary",
