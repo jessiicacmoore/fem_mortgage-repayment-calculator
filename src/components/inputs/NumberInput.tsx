@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { formatNumber } from "@utils/formatNumber";
 import { cn } from "@utils/cn";
 
@@ -25,19 +24,11 @@ function NumberInput({
   unit,
   unitPosition = "suffix",
 }: NumberInputProps) {
-  const [formattedValue, setFormattedValue] = useState(value);
-
-  useEffect(() => {
-    setFormattedValue(formatNumber(value, allowDecimals));
-  }, [value, allowDecimals]);
+  const formattedValue = formatNumber(value, allowDecimals);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-
-    const formatted = formatNumber(inputValue, allowDecimals);
-    setFormattedValue(formatted);
-
-    const sanitizedValue = formatted.replace(/[, ]/g, "");
+    const sanitizedValue = formatNumber(inputValue, allowDecimals).replace(/[, ]/g, "");
     onChange(sanitizedValue);
   };
 

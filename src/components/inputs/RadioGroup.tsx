@@ -1,3 +1,5 @@
+import { cn } from "@utils/cn";
+
 type RadioGroupOption = {
   value: string;
   label: string;
@@ -22,34 +24,45 @@ function RadioGroup({
     onChange(e.target.value);
   };
   return (
-    <fieldset role="radiogroup" aria-labelledby={`${name}-legend`}>
+    <fieldset aria-labelledby={`${name}-legend`}>
       <legend id={`${name}-legend`} className="mb-2">
         {label}
       </legend>
       <div>
-        {options.map((option) => (
-          <label
-            key={option.value}
-            className="input-base has-[:checked]:bg-transparent-primary mb-2 flex cursor-pointer items-center font-bold focus-within:ring-2 focus-within:ring-blue-500 has-[:checked]:border-primary-lime"
-          >
-            <input
-              type="radio"
-              id={`${name}-${option.value}`}
-              name={name}
-              value={option.value}
-              checked={selectedValue === option.value}
-              onChange={handleChange}
-              aria-checked={selectedValue === option.value}
-              className="peer sr-only"
-            />
-            <div className="mr-3 flex h-4 w-4 items-center justify-center rounded-full border-2 border-neutral-700 peer-checked:border-primary-lime">
-              {selectedValue === option.value && (
-                <div className="h-4/6 w-4/6 rounded-full bg-primary-lime"></div>
+        {options.map((option) => {
+          const isChecked = selectedValue === option.value;
+
+          return (
+            <label
+              key={option.value}
+              className={cn(
+                "input-base mb-2 flex cursor-pointer items-center font-bold focus-within:ring-2 focus-within:ring-blue-500 hover:ring-2",
+                isChecked && "border-primary-lime bg-transparent-primary",
               )}
-            </div>
-            <span>{option.label}</span>
-          </label>
-        ))}
+            >
+              <input
+                type="radio"
+                id={`${name}-${option.value}`}
+                name={name}
+                value={option.value}
+                checked={isChecked}
+                onChange={handleChange}
+                className="peer sr-only"
+              />
+              <div
+                className={cn(
+                  "mr-3 flex h-4 w-4 items-center justify-center rounded-full border-2",
+                  isChecked ? "border-primary-lime" : "border-neutral-700",
+                )}
+              >
+                {isChecked && (
+                  <div className="h-4/6 w-4/6 rounded-full bg-primary-lime"></div>
+                )}
+              </div>
+              <span>{option.label}</span>
+            </label>
+          );
+        })}
       </div>
     </fieldset>
   );
