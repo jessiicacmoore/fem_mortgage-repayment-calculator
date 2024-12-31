@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatNumber } from "@utils/formatNumber";
 import { cn } from "@utils/cn";
 
@@ -26,6 +26,10 @@ function NumberInput({
   unitPosition = "suffix",
 }: NumberInputProps) {
   const [formattedValue, setFormattedValue] = useState(value);
+
+  useEffect(() => {
+    setFormattedValue(value);
+  }, [value]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
