@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useState} from "react";
 import calculatorIcon from "@assets/images/icon-calculator.svg";
 import { MortgageFormData } from "../types";
 import { useMortgageFormValidation } from "../hooks/useMortgageFormValidation";
@@ -19,10 +19,25 @@ function MortgageForm({
   onReset,
 }: MortgageFormProps) {
   const { errors, validate, resetErrors } = useMortgageFormValidation();
-  const [formErrorSummary, setFormErrorSummary] = React.useState("");
+  const [formErrorSummary, setFormErrorSummary] = useState("");
 
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = useCallback(
+    (field: keyof MortgageFormData, value: string) => {
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    },
+    [setFormData]
+  );
+
+  const handleClearAll = () => {
+    onReset();
+    resetErrors();
+    setFormData({
+      mortgageAmount: "",
+      mortgageTerm: "",
+      interestRate: "",
+      mortgageType: "Repayment",
+    });
+    setFormErrorSummary("");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -53,10 +68,7 @@ function MortgageForm({
         <Button
           buttonType="secondary"
           aria-describedby="clear-all-desc"
-          onClick={() => {
-            onReset();
-            resetErrors();
-          }}
+          onClick={handleClearAll}
         >
           Clear All
         </Button>

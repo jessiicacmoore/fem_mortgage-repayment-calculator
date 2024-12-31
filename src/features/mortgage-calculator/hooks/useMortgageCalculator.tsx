@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { calculateRepayments } from "../utils";
+import { calculateRepayments, formatCurrency } from "../utils";
 import { MortgageResultsData, MortgageFormData } from "../types";
 
 export const useMortgageCalculator = () => {
@@ -12,17 +12,6 @@ export const useMortgageCalculator = () => {
 
   const [formData, setFormData] = useState<MortgageFormData>(initialFormData);
   const [results, setResults] = useState<null | MortgageResultsData>(null);
-
-  const formatCurrency = (value: string): string => {
-    const parsedValue = parseFloat(value);
-    if (isNaN(parsedValue)) {
-      return "$0.00";
-    }
-    return new Intl.NumberFormat("en-CA", {
-      style: "currency",
-      currency: "CAD",
-    }).format(parsedValue);
-  };
 
   const handleCalculate = () => {
     const { mortgageAmount, mortgageTerm, interestRate, mortgageType } =
