@@ -9,7 +9,9 @@ export const useMortgageFormValidation = () => {
     mortgageType: "",
   });
 
-  const validate = (formData: MortgageFormData): boolean => {
+  const validate = (
+    formData: MortgageFormData,
+  ): { isValid: boolean; errors: Record<keyof MortgageFormData, string> } => {
     const newErrors: Record<keyof MortgageFormData, string> = {
       mortgageAmount: "",
       mortgageTerm: "",
@@ -17,7 +19,10 @@ export const useMortgageFormValidation = () => {
       mortgageType: "",
     };
 
-    if (!formData.mortgageAmount || parseFloat(formData.mortgageAmount) > 9999999) {
+    if (
+      !formData.mortgageAmount ||
+      parseFloat(formData.mortgageAmount) > 9999999
+    ) {
       newErrors.mortgageAmount = "Enter a valid amount up to $9,999,999.";
     }
     if (!formData.mortgageTerm || parseInt(formData.mortgageTerm) > 30) {
@@ -29,7 +34,9 @@ export const useMortgageFormValidation = () => {
 
     setErrors(newErrors);
 
-    return Object.values(newErrors).every((error) => !error);
+    const isValid = Object.values(newErrors).every((error) => !error);
+
+    return { isValid, errors: newErrors };
   };
 
   const resetErrors = () => {

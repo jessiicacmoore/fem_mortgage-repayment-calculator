@@ -28,8 +28,8 @@ function NumberInput({
   const [formattedValue, setFormattedValue] = useState(value);
 
   useEffect(() => {
-    setFormattedValue(value);
-  }, [value]);
+    setFormattedValue(formatNumber(value, allowDecimals));
+  }, [value, allowDecimals]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -78,11 +78,7 @@ function NumberInput({
         {unit ? `This field expects an amount in ${unit}` : ""}
       </span>
       {error && (
-        <span
-          id={`${id}-error`}
-          className="text-xs text-primary-red"
-          role="alert"
-        >
+        <span id={`${id}-error`} className="text-xs text-primary-red">
           {error}
         </span>
       )}

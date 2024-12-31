@@ -19,6 +19,7 @@ function MortgageForm({
   onReset,
 }: MortgageFormProps) {
   const { errors, validate, resetErrors } = useMortgageFormValidation();
+  const [formErrorSummary, setFormErrorSummary] = React.useState("");
 
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -26,8 +27,22 @@ function MortgageForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate(formData)) {
+
+    const { isValid, errors: validationErrors } = validate(formData);
+    
+    if (isValid) {
+      setFormErrorSummary("");
       onCalculate();
+    } else {
+      setFormErrorSummary("Please fix the errors in the form and try again.");
+
+      const firstErrorFieldId = Object.keys(validationErrors).find(
+        (key) => validationErrors[key as keyof MortgageFormData],
+      );
+
+      if (firstErrorFieldId) {
+        document.getElementById(firstErrorFieldId)?.focus();
+      }
     }
   };
 
@@ -49,11 +64,14 @@ function MortgageForm({
           Clears all fields in the form below.
         </p>
       </div>
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {formErrorSummary}
+      </div>
       <form onSubmit={handleSubmit} className="mt-6">
         <NumberInput
           label="Mortgage Amount"
           value={formData.mortgageAmount}
-          id="mortgage-amount"
+          id="mortgageAmount"
           unit="$"
           unitPosition="prefix"
           error={errors.mortgageAmount}
@@ -63,7 +81,7 @@ function MortgageForm({
           <NumberInput
             label="Mortgage Term"
             value={formData.mortgageTerm}
-            id="mortgage-term"
+            id="mortgageTerm"
             unit="years"
             error={errors.mortgageTerm}
             onChange={(value) => handleInputChange("mortgageTerm", value)}
@@ -71,7 +89,7 @@ function MortgageForm({
           <NumberInput
             label="Interest Rate"
             value={formData.interestRate}
-            id="interest-rate"
+            id="interestRate"
             unit="%"
             allowDecimals
             error={errors.interestRate}
