@@ -13,6 +13,17 @@ export const useMortgageCalculator = () => {
   const [formData, setFormData] = useState<MortgageFormData>(initialFormData);
   const [results, setResults] = useState<null | MortgageResultsData>(null);
 
+  const formatCurrency = (value: string): string => {
+    const parsedValue = parseFloat(value);
+    if (isNaN(parsedValue)) {
+      return "$0.00";
+    }
+    return new Intl.NumberFormat("en-CA", {
+      style: "currency",
+      currency: "CAD",
+    }).format(parsedValue);
+  };
+
   const handleCalculate = () => {
     const { mortgageAmount, mortgageTerm, interestRate, mortgageType } =
       formData;
@@ -22,7 +33,13 @@ export const useMortgageCalculator = () => {
       parseInt(mortgageTerm),
       mortgageType as "Repayment" | "Interest Only",
     );
-    setResults(calculatedResults);
+
+    const formattedResults = {
+      monthlyRepayment: formatCurrency(calculatedResults.monthlyRepayment),
+      totalRepayment: formatCurrency(calculatedResults.totalRepayment),
+    };
+
+    setResults(formattedResults);
 
     setTimeout(() => {
       const resultsContainer = document.getElementById("results-container");
