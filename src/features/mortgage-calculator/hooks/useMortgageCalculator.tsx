@@ -23,6 +23,11 @@ export const useMortgageCalculator = () => {
       mortgageType as "Repayment" | "Interest Only",
     );
     setResults(calculatedResults);
+
+    setTimeout(() => {
+      const resultsContainer = document.getElementById("results-container");
+      resultsContainer?.focus();
+    }, 0);
   };
 
   const reset = () => {
@@ -35,6 +40,6 @@ export const useMortgageCalculator = () => {
     setFormData,
     results,
     handleCalculate,
-    reset
+    reset,
   };
 };
