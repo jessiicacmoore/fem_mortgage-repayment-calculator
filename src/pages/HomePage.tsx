@@ -5,7 +5,7 @@ import {
 import { useMortgageCalculator } from "@features/mortgage-calculator/hooks";
 
 function HomePage() {
-  const { formData, setFormData, results, handleCalculate } =
+  const { formData, setFormData, results, handleCalculate, reset } =
     useMortgageCalculator();
 
   return (
@@ -14,6 +14,7 @@ function HomePage() {
         formData={formData}
         setFormData={setFormData}
         onCalculate={handleCalculate}
+        onReset={reset}
       />
       <MortgageResults results={results} />
     </div>

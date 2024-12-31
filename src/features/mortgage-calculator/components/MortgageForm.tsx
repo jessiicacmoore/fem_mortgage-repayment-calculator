@@ -1,6 +1,7 @@
 import React from "react";
 import calculatorIcon from "@assets/images/icon-calculator.svg";
 import { MortgageFormData } from "../types";
+import { useMortgageFormValidation } from "../hooks/useMortgageFormValidation";
 import { Button, Container } from "@components/ui";
 import { NumberInput, RadioGroup } from "@components/inputs";
 
@@ -8,27 +9,40 @@ type MortgageFormProps = {
   formData: MortgageFormData;
   setFormData: React.Dispatch<React.SetStateAction<MortgageFormData>>;
   onCalculate: () => void;
+  onReset: () => void;
 };
 
 function MortgageForm({
   formData,
   setFormData,
   onCalculate,
+  onReset,
 }: MortgageFormProps) {
+  const { errors, validate, resetErrors } = useMortgageFormValidation();
+
   const handleInputChange = (field: keyof typeof formData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onCalculate();
+    if (validate(formData)) {
+      onCalculate();
+    }
   };
 
   return (
     <Container>
       <div className="md:mb-3 md:mt-2 md:flex md:items-center md:justify-between">
         <h1>Mortgage Calculator</h1>
-        <Button buttonType="secondary" aria-describedby="clear-all-desc">
+        <Button
+          buttonType="secondary"
+          aria-describedby="clear-all-desc"
+          onClick={() => {
+            onReset();
+            resetErrors();
+          }}
+        >
           Clear All
         </Button>
         <p className="hidden" id="clear-all-desc">
@@ -42,6 +56,7 @@ function MortgageForm({
           id="mortgage-amount"
           unit="$"
           unitPosition="prefix"
+          error={errors.mortgageAmount}
           onChange={(value) => handleInputChange("mortgageAmount", value)}
         />
         <div className="md:grid md:grid-cols-2 md:gap-6">
@@ -50,6 +65,7 @@ function MortgageForm({
             value={formData.mortgageTerm}
             id="mortgage-term"
             unit="years"
+            error={errors.mortgageTerm}
             onChange={(value) => handleInputChange("mortgageTerm", value)}
           />
           <NumberInput
@@ -58,6 +74,7 @@ function MortgageForm({
             id="interest-rate"
             unit="%"
             allowDecimals
+            error={errors.interestRate}
             onChange={(value) => handleInputChange("interestRate", value)}
           />
         </div>

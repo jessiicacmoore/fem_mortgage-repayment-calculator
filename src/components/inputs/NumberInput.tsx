@@ -40,6 +40,7 @@ function NumberInput({
   const inputClasses = cn("input-base z-10 peer", {
     "border-l-0 rounded-l-none": unit && unitPosition === "prefix",
     "border-r-0 rounded-r-none": unit && unitPosition === "suffix",
+    "border-primary-red": error,
   });
 
   const unitClasses = cn(
@@ -47,14 +48,15 @@ function NumberInput({
     {
       "rounded-l border-r-0": unit && unitPosition === "prefix",
       "rounded-r border-l-0": unit && unitPosition === "suffix",
+      "border-primary-red text-neutral-white bg-primary-red": error,
     },
   );
 
   return (
-    <div>
+    <div className="mb-6">
       <label htmlFor={id}>{label}</label>
       <div
-        className={`relative mb-6 mt-2 flex ${unitPosition === "prefix" ? "flex-row-reverse" : ""}`}
+        className={`relative mb-1 mt-2 flex ${unitPosition === "prefix" ? "flex-row-reverse" : ""}`}
       >
         <input
           type="text"
@@ -72,7 +74,11 @@ function NumberInput({
         {unit ? `This field expects an amount in ${unit}` : ""}
       </span>
       {error && (
-        <span id={`${id}-error`} className="text-sm text-red-500">
+        <span
+          id={`${id}-error`}
+          className="text-xs text-primary-red"
+          role="alert"
+        >
           {error}
         </span>
       )}
